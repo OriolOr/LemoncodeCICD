@@ -10,12 +10,12 @@ jobs:
       - name: Checkout 🚦
         uses: actions/checkout@v3
       
-      - name: build Node 🏗
+      - name: Build 🏗
         working-directory: ./hangman-front
         run: |
           npm ci 
           npm run build --if-present
 
-      - name: test 🧪
+      - name: Unit test 🧪
         working-directory: ./hangman-front
         run: npm test
