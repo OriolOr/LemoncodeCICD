@@ -29,11 +29,13 @@ jobs:
 
 Al ejecutar la build vemos que todos los steps se realizan correctamente hasta que llegamos a los test donde uno de los test falla. 
 
-Imagen fail build
-
+![image info](pics/build-fail.png)
 Si queremos que los test pasen, cambiamos el assert del test y vemos como ya todos los pasos de nuestro workflow se pasan correctamente 
 
 ` expect(items).toHaveLength(2); `
 
-Imagen pass build
+![image info](pics/build-pass.png)
+
+
+# Ejercicio 2. Crea un workflow CD para el proyecto de frontend
 
