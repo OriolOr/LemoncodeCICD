@@ -22,3 +22,11 @@ jobs:
         with:
           name: build-code
           path: hangman-front/dist/
+         
+  deploy : 
+    runs-on: ubuntu-latest
+    needs: build 
+
+    steps : 
+      - name: Checkout 🚦
+        uses: actions/checkout@v3
