@@ -31,5 +31,12 @@ jobs:
       - name: Checkout 🚦
         uses: actions/checkout@v3
       
-      - name: Dowload Artifact
+      - name: Dowload Artifact 📦
         uses: actions/download-artifact@v3 
+        with: 
+         name: build-code
+         path: hangman-front/dist/
+
+      - name: Build Docker Image 🐳
+        working-directory: ./hangman-front
+        run: docker build . --file Dockerfile.workflow -t oriolors/ciDockerImage
