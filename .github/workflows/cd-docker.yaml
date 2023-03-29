@@ -1,5 +1,4 @@
 name: cd-docker
-
 on: 
   workflow_dispatch:
 
@@ -28,18 +27,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: build 
 
-    steps : 
-      - name: Checkout 🚦
-        uses: actions/checkout@v3
-      
-      - name: Dowload Artifact ⬇
-        uses: download-artifact@v3 
-        with: 
-          name: build-code
-          path: hangman-front/dist/
-
-      - name: Build Docker Image 🐳
-        working-directory: ./hangman-front
-        run: docker build . --file Dockerfile.workflow -t oriolors/ciDockerImage
+#    steps : 
+#      - name: Checkout 🚦
+#        uses: actions/checkout@v3
+#      
+#      - name: Dowload Artifact ⬇
+#        uses: download-artifact@v3 
+#        with: 
+#          name: build-code
+#          path: hangman-front/dist/
+#
+#      - name: Build Docker Image 🐳
+#        working-directory: ./hangman-front
+#        run: docker build . --file Dockerfile.workflow -t oriolors/ciDockerImage
 
 
