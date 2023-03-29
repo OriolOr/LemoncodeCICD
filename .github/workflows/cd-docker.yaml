@@ -31,5 +31,5 @@ jobs:
       - name: Checkout 🚦
         uses: actions/checkout@v3
       
-      - name: Dowload Artifact ⬇
+      - name: Dowload Artifact
         uses: download-artifact@v3 
