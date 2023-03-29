@@ -1,5 +1,5 @@
-name: cd
-on: 
+name: CD
+on:
   workflow_dispatch:
 
 jobs: 
