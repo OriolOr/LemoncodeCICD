@@ -40,5 +40,3 @@ jobs:
       - name: Build Docker Image 🐳
         working-directory: ./hangman-front
         run: docker build . --file Dockerfile.workflow -t oriolors/ciDockerImage
-
-
