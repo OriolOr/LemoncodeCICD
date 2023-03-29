@@ -30,3 +30,9 @@ jobs:
     steps : 
       - name: Checkout 🚦
         uses: actions/checkout@v3
+      - name: Dowload Artifact ⬇
+      
+        uses: download-artifact@v3 
+        with: 
+          name: build-code
+          path: hangman-front/dist/
