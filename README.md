@@ -95,3 +95,48 @@ on:
  workflow_dispatch:
 
 ```
+
+Creamos un job para la build donde generaremos nuestro artefacto que será posteriormente usado en la construccion de la imagen de docker
+```  
+build: 
+  runs-on: ubuntu-latest
+  steps: 
+    - name: Checkout 🚦
+      uses: actions/checkout@v3 
+    - name: Setup Node 🔧
+      uses: actions/setup-node@v3
+      
+    - name: Build 🏗
+      working-directory: ./hangman-front
+      run: |
+        npm ci 
+        npm run build --if-present
+
+    - name: Upload artifact 📦
+      uses: actions/upload-artifact@v3 
+      with:
+        name: build-code
+        path: hangman-front/dist/
+```
+
+El siguiente paso sera crear el job para que podamos hacer build de nuestra imagen de docker y publicarla en el registro de packetes de github. En primer lugar es necesario hacer login al container regristry de GitHub. 
+
+```
+echo "${{ secrets.DOCKER_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+```
+
+COnfiguramos el nombre de la imagen teniendo en cuenta el usuario y el repositorio. Seguidamente hacemos build de la imagen.
+```
+dockerImage=ghcr.io/$DOCKER_USER/$DOCKER_REPOSITORY
+docker build . --file Dockerfile.workflow -t $dockerImage:latest
+```
+
+FInalmente cuando el proceso de build se ha realizado correctamente publicamos nuestra imagen en el container registry de GitHub.
+
+```
+docker push $dockerImage:latest
+```
+
+Ejecutamos la pipeline manualmente y comprovamos como todos los pasos se han realizado correctaente
+
+![image info](pics/cd-pass.png)
