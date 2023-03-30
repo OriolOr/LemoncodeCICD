@@ -88,6 +88,10 @@ y vemos como ya todos los pasos de nuestro workflow pasan correctamente.
 Creamos un nuevo archivo `.yaml` llamado `.cd-docker`. En este archivo, al igual que en el ejercicio 1 necesitamos ejecutar la build del proyecto por lo que creamos un job que realize este paso : 
 
 
-En primer lugar definimos que el trigger de la build va a ser manual.
+En primer lugar definimos que el trigger de la build va a ser manual mediante `wor kflow_dispatch`.
+
 ```
+on:
+ workflow_dispatch:
+
 ```

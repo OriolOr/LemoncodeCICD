@@ -34,9 +34,15 @@ jobs:
       - name: Dowload Artifact 📦
         uses: actions/download-artifact@v3 
         with: 
-         name: build-code
+         name: build-code 
          path: hangman-front/dist/
 
       - name: Build Docker Image 🐳
         working-directory: ./hangman-front
-        run: docker build . --file Dockerfile.workflow -t oriolors/cidockerimage
+        env: 
+          DOCKER_USER: "oriolors"
+          DOCKER_REPOSITORY: "hangman-front"
+        run: |
+        echo "${{ secrets.DOCKER_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+        #docker build . --file Dockerfile.workflow -t $DOCKER_USER/cidockerimage
+        #docker push ghcr.io/NAMESPACE/IMAGE_NAME:latest
