@@ -118,6 +118,7 @@ build:
         name: build-code
         path: hangman-front/dist/
 ```
+Añadimos dentro den proyecto de `hangman-front` el  archivo `Dockerfile.workflow` que utilizaremos para 
 
 El siguiente paso sera crear el job para que podamos hacer build de nuestra imagen de docker y publicarla en el registro de packetes de github. En primer lugar es necesario hacer login al container regristry de GitHub. 
 
