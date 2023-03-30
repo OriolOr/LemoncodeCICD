@@ -31,7 +31,7 @@ El siguiente paso sera compilar nuestro codigo y para ello ejecutaremos los coma
        npm run build --if-present
 ```
 
-Por último ejecutaremos los tests unitarios del mismo modo que en el step anterior peru ejecutando la instruccion `npm run`
+Por último ejecutaremos los tests unitarios del mismo modo que en el step anterior pero ejecutando la instruccion `npm run`
 
 ```
     - name: Unit test 🧪
@@ -67,7 +67,7 @@ jobs:
         run: npm test
 ```
 
-Al ejecutar la build vemos que todos los steps se realizan correctamente a excepcion de los test , dado que uno de los test falla y por lo tanto el step de test es fallido igualmente.
+Al ejecutar la build vemos que todos los steps se realizan correctamente a excepcion de los test , dado que uno de los test falla y por lo tanto el step de test es fallido.
 
 ![image info](pics/build-fail.png)
 
@@ -88,7 +88,7 @@ y vemos como ya todos los pasos de nuestro workflow pasan correctamente.
 Creamos un nuevo archivo `.yaml` llamado `.cd-docker`. En este archivo, al igual que en el ejercicio 1 necesitamos ejecutar la build del proyecto por lo que creamos un job que realize este paso : 
 
 
-En primer lugar definimos que el trigger de la build va a ser manual mediante `wor kflow_dispatch`.
+En primer lugar definimos que el trigger de la build va a ser manual mediante `workflow_dispatch`.
 
 ```
 on:
@@ -96,7 +96,7 @@ on:
 
 ```
 
-Creamos un job para la build donde generaremos nuestro artefacto que será posteriormente usado en la construccion de la imagen de docker
+Creamos un job para la build donde generaremos nuestro artefacto que será posteriormente usado en la construccion de la imagen de docker.
 ```  
 build: 
   runs-on: ubuntu-latest
@@ -118,27 +118,27 @@ build:
         name: build-code
         path: hangman-front/dist/
 ```
-Añadimos dentro den proyecto de `hangman-front` el  archivo `Dockerfile.workflow` que utilizaremos para construir la imagen de Docker.
+Añadimos dentro del proyecto de `hangman-front` el  archivo `Dockerfile.workflow` que utilizaremos para construir la imagen de Docker.
 
-El siguiente paso sera crear el job para que podamos hacer build de nuestra imagen de docker y publicarla en el registro de packetes de github. En primer lugar es necesario hacer login al container regristry de GitHub. 
+El siguiente paso sera crear el job para que podamos hacer build de nuestra imagen de docker y publicarla en el container registry de github. En primer lugar es necesario hacer login al container regristry de GitHub. 
 
 ```
 echo "${{ secrets.DOCKER_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 ```
 
-COnfiguramos el nombre de la imagen teniendo en cuenta el usuario y el repositorio. Seguidamente hacemos build de la imagen.
+Configuramos el nombre de la imagen teniendo en cuenta el usuario y el repositorio. Seguidamente hacemos build de la imagen.
 ```
 dockerImage=ghcr.io/$DOCKER_USER/$DOCKER_REPOSITORY
 docker build . --file Dockerfile.workflow -t $dockerImage:latest
 ```
 
-FInalmente cuando el proceso de build se ha realizado correctamente publicamos nuestra imagen en el container registry de GitHub.
+Finalmente cuando el proceso de build se ha realizado correctamente, publicamos nuestra imagen en el container registry de GitHub.
 
 ```
 docker push $dockerImage:latest
 ```
 
-Ejecutamos la pipeline manualmente y comprovamos como todos los pasos se han realizado correctaente
+Ejecutamos la pipeline manualmente y comprobamos como todos los pasos se han realizado correctaente.
 
 ![image info](pics/cd-pass.png)
 
